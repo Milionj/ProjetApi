@@ -7,12 +7,12 @@ const router = express.Router();
  
 // Signup Route
 router.post(
-    "/signup",
+    "/users",
     [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
     signup,
 );
  
 // Signin Route
-router.post("/signin", signin);
+router.post("/login", signin);
  
 export default router;
