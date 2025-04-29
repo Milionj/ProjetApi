@@ -20,6 +20,15 @@ export default (sequelize, DataTypes) => {
         },
     });
 
+     // Ajoute cette méthode pour configurer l'association
+     User.associate = (models) => {
+        User.belongsToMany(models.role, {
+            through: "user_roles",      // nom de la table d'association
+            foreignKey: "userId",       // clé étrangère pour l'utilisateur
+            otherKey: "roleId",         // clé étrangère pour le rôle
+        });
+    };
+
     // On retourne le modèle User pour l'utiliser ailleurs
     return User;
 };

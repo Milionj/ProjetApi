@@ -1,18 +1,23 @@
 export default (sequelize, DataTypes) => {
-    // Définition d'un modèle Sequelize nommé "roles"
     const Role = sequelize.define("roles", {
-        // Champ "id" qui sera la clé primaire auto-incrémentée
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        // Champ "name" pour le nom du rôle (ex: 'user', 'admin', 'moderator')
         name: {
             type: DataTypes.STRING,
         },
     });
 
-    // On retourne le modèle pour l'utiliser ailleurs
+    // Association inverse vers le modèle "users"
+    Role.associate = (models) => {
+        Role.belongsToMany(models.user, {
+            through: "user_roles",       // table pivot
+            foreignKey: "roleId",        // clé étrangère côté rôle
+            otherKey: "userId",          // clé étrangère côté user
+        });
+    };
+
     return Role;
 };
